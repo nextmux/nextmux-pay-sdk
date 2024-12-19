@@ -53,7 +53,7 @@ class Config
         return $this->version;
     }
 
-    protected function getToken(): string
+    public function getToken(): string
     {
         $ch = curl_init( $this->getApiUrl().'/oauth/token');
         $postData = http_build_query([
