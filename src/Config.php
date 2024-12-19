@@ -10,35 +10,36 @@ class Config
     private $apiUrl;
     private $version = 'v1';
 
-    private function __construct() {}
+    private function __construct(array $params = [])
+    {
+        $this->publicKey = $params['publicKey'] ?? null;
+        $this->secretKey = $params['secretKey'] ?? null;
+        $this->apiUrl = $params['apiUrl'] ?? 'https://api.nextmuxpay.com';
+        $this->version = $params['version'] ?? $this->version;
+    }
 
-    public static function getInstance(): Config
+    // public static function getInstance(): Config
+    // {
+    //     if (!self::$instance) {
+    //         self::$instance = new Config();
+    //     }
+
+    //     return self::$instance;
+    // }
+
+    public static function getInstance(array $params = []): Config
     {
         if (!self::$instance) {
-            self::$instance = new Config();
+            self::$instance = new Config($params);
+        } else {
+            if (!empty($params)) {
+                throw new \Exception("Config instance is already initialized. Parameters cannot be redefined.");
+            }
         }
 
         return self::$instance;
     }
-
-    public function setKeys(string $publicKey, string $secretKey, string $apiUrl = 'https://api.nextmuxpay.com', string $version = 'v1'): void
-    {
-        $this->publicKey = $publicKey;
-        $this->secretKey = $secretKey;
-        $this->setApiUrl($apiUrl);
-        $this->setVersion($version);
-    }
-
-    public function setApiUrl(string $apiUrl): void
-    {
-        $this->apiUrl = $apiUrl;
-    }
-
-    public function setVersion(string $version): void
-    {
-        $this->version = $version;
-    }
-
+ 
     public function getApiUrl(): string
     {
         return $this->apiUrl;
