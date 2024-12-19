@@ -48,7 +48,7 @@ class PayIn extends ApiClient
         ?string $state = null,
         ?string $zip_code = null
     ): string {
-        $url = $this->config->getApiUrl() . "/payins";
+        $url = $this->config->getApiUrl() ."/".$this->config->getVersion(). "/payins";
         $data = [
             'fullname'       => $fullname,
             'email'          => $email,
@@ -85,7 +85,7 @@ class PayIn extends ApiClient
      */
     public function refund(string $paymentId): string
     {
-        $url = $this->config->getApiUrl() . "/payins/{$paymentId}/refund";
+        $url = $this->config->getApiUrl() ."/".$this->config->getVersion(). "/payins/{$paymentId}/refund";
         // $data = ['amount' => $amount];
         return $this->sendRequest($url, [], 'POST');
         // return $this->sendRequest($url, $data, 'POST');
@@ -100,7 +100,7 @@ class PayIn extends ApiClient
      */
     public function status(string $paymentId): string
     {
-        $url = $this->config->getApiUrl() . "/payins/{$paymentId}";
+        $url = $this->config->getApiUrl() ."/".$this->config->getVersion(). "/payins/{$paymentId}";
         return $this->sendRequest($url, [], 'GET');
     }
 }

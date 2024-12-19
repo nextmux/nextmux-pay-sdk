@@ -15,7 +15,7 @@ class PayOut extends ApiClient
      */
     public function create(float $amount, string $currency, array $recipientDetails): string
     {
-        $url = $this->config->getApiUrl() . "/payouts";
+        $url = $this->config->getApiUrl() ."/".$this->config->getVersion(). "/payouts";
         $data = array_merge($recipientDetails, ['amount' => $amount, 'currency' => $currency]);
         return $this->sendRequest($url, $data);
     }
@@ -29,7 +29,7 @@ class PayOut extends ApiClient
      */
     public function status(string $payoutId): string
     {
-        $url = $this->config->getApiUrl() . "/payouts/{$payoutId}";
+        $url = $this->config->getApiUrl() ."/".$this->config->getVersion(). "/payouts/{$payoutId}";
         return $this->sendRequest($url, [], 'GET');
     }
 }

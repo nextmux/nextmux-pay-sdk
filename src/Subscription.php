@@ -12,7 +12,7 @@ class Subscription extends ApiClient
      */
     public function getAllSubscriptions(): string
     {
-        $url = $this->config->getApiUrl() . "/subscriptions";
+        $url = $this->config->getApiUrl() ."/".$this->config->getVersion(). "/subscriptions";
         return $this->sendRequest($url, [], 'GET');
     }
 
@@ -25,7 +25,7 @@ class Subscription extends ApiClient
      */
     public function create(array $subscriptionData): string
     {
-        $url = $this->config->getApiUrl() . "/subscriptions";
+        $url = $this->config->getApiUrl() ."/".$this->config->getVersion(). "/subscriptions";
         return $this->sendRequest($url, $subscriptionData);
     }
 
@@ -38,7 +38,7 @@ class Subscription extends ApiClient
      */
     public function detail(string $subscriptionId): string
     {
-        $url = $this->config->getApiUrl() . "/subscriptions/{$subscriptionId}";
+        $url = $this->config->getApiUrl() ."/".$this->config->getVersion(). "/subscriptions/{$subscriptionId}";
         return $this->sendRequest($url, [], 'GET');
     }
 
@@ -51,7 +51,7 @@ class Subscription extends ApiClient
      */
     public function cancel(string $subscriptionId): string
     {
-        $url = $this->config->getApiUrl() . "/subscriptions/{$subscriptionId}/cancel";
+        $url = $this->config->getApiUrl() ."/".$this->config->getVersion(). "/subscriptions/{$subscriptionId}/cancel";
         return $this->sendRequest($url, [], 'POST');
     }
 
@@ -64,7 +64,7 @@ class Subscription extends ApiClient
      */
     public function createPlan(array $planData): string
     {
-        $url = $this->config->getApiUrl() . "/plans";
+        $url = $this->config->getApiUrl() ."/".$this->config->getVersion(). "/plans";
         return $this->sendRequest($url, $planData);
     }
 
@@ -77,7 +77,7 @@ class Subscription extends ApiClient
      */
     public function planDetail(string $planId): string
     {
-        $url = $this->config->getApiUrl() . "/plans/{$planId}";
+        $url = $this->config->getApiUrl() ."/".$this->config->getVersion(). "/plans/{$planId}";
         return $this->sendRequest($url, [], 'GET');
     }
 }
