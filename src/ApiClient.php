@@ -22,7 +22,7 @@ abstract class ApiClient
      */
     protected function sendRequest(string $url, array $data = [], string $method = 'POST'): string
     {
-        $ch = curl_init($url);
+        $ch = curl_init($url.'/'.$this->config->getVersion());
 
         $headers = [
             'Authorization: Bearer ' . $this->config->getSecretKey(),
