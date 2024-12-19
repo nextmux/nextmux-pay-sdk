@@ -1,4 +1,5 @@
-<?php 
+<?php
+
 namespace Nextmux\PaySDK;
 
 abstract class ApiClient
@@ -25,7 +26,10 @@ abstract class ApiClient
 
         $headers = [
             'Authorization: Bearer ' . $this->config->getSecretKey(),
-            'Content-Type: application/json'
+            'Content-Type: application/json',
+            'Accept: application/json',
+            'X-Forwarded-For: ' . $_SERVER['REMOTE_ADDR'], 
+            'User-Agent: ' . $_SERVER['HTTP_USER_AGENT'],  
         ];
 
         curl_setopt($ch, CURLOPT_HTTPHEADER, $headers);
@@ -44,6 +48,48 @@ abstract class ApiClient
 
         if (curl_errno($ch)) {
             throw new \Exception('Request Error: ' . curl_error($ch));
+        }
+
+        curl_close($ch);
+
+        return $response;
+    }
+
+    protected function getToken(): string
+    {
+        $ch = curl_init( $this->config->getApiUrl().'/oauth/token');
+        $postData = http_build_query([
+            'client_id' => $this->config->getPublictKey(),
+            'client_secret' => $this->config->getSecretKey(),
+            'grant_type' => 'client_credentials',
+            'scope' => ''
+        ] );
+        $headers = [
+            'Content-Type: application/x-www-form-urlencoded',
+            'Accept: application/json',
+            'X-Forwarded-For: ' . $_SERVER['REMOTE_ADDR'], 
+            'User-Agent: ' . $_SERVER['HTTP_USER_AGENT'],  
+        ];
+
+        curl_setopt_array($ch, [
+            CURLOPT_HTTPHEADER => $headers,
+            CURLOPT_POST => true,
+            CURLOPT_POSTFIELDS => $postData,
+            CURLOPT_RETURNTRANSFER => true,
+            CURLOPT_TIMEOUT => 30,
+            CURLOPT_CONNECTTIMEOUT => 10,
+        ]);
+
+        $response = curl_exec($ch);
+
+        if (curl_errno($ch)) {
+            throw new \Exception('cURL Error: ' . curl_error($ch));
+        }
+
+        $httpCode = curl_getinfo($ch, CURLINFO_HTTP_CODE);
+
+        if ($httpCode < 200 || $httpCode >= 300) {
+            throw new \Exception("HTTP Error: $httpCode, Response: $response");
         }
 
         curl_close($ch);

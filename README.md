@@ -2,7 +2,6 @@
 composer require nextmux/pay-sdk
 ```
 
-
 ```php
 use Nextmux\PaySDK\Pay;
 $pay = new Pay();
@@ -24,5 +23,11 @@ $response = $pay->initiatePayment(100.00, 'USD', ['order_id' => '123']);
 // Utilisation de la classe PayOut
 $payout = new PayOut();
 $response = $payout->createPayoutRequest(500.00, 'EUR', ['bank_account' => '987654']);
+
+// Get token
+curl -X POST https://api.nextmuxpay.com/oauth/token \
+-H "Content-Type: application/x-www-form-urlencoded" \
+-d "grant_type=password&client_id=your-client-id&client_secret=your-client-secret&scope="
+
 
 ```

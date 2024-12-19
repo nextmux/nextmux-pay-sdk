@@ -20,10 +20,11 @@ class Config
         return self::$instance;
     }
 
-    public function setKeys(string $publicKey, string $secretKey): void
+    public function setKeys(string $publicKey, string $secretKey, string $apiUrl = 'https://api.nextmuxpay.com'): void
     {
         $this->publicKey = $publicKey;
         $this->secretKey = $secretKey;
+        $this->apiUrl = $apiUrl;
     }
 
     public function setApiUrl(string $apiUrl): void
@@ -39,5 +40,9 @@ class Config
     public function getSecretKey(): string
     {
         return $this->secretKey;
+    }
+    public function getPublictKey(): string
+    {
+        return $this->publicKey;
     }
 }
