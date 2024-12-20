@@ -17,17 +17,7 @@ class Config
         $this->apiUrl = $params['apiUrl'] ?? 'https://api.nextmuxpay.com';
         $this->version = $params['version'] ?? $this->version;
     }
-
-    // public static function getInstance(): Config
-    // {
-    //     if (!self::$instance) {
-    //         self::$instance = new Config();
-    //     }
-
-    //     return self::$instance;
-    // }
-
-    public static function getInstance(array $params = []): Config
+    public static function init(array $params = []): Config
     {
         if (!self::$instance) {
             self::$instance = new Config($params);
@@ -36,10 +26,9 @@ class Config
                 throw new \Exception("Config instance is already initialized. Parameters cannot be redefined.");
             }
         }
-
         return self::$instance;
     }
- 
+
     public function getApiUrl(): string
     {
         return $this->apiUrl;
@@ -58,6 +47,4 @@ class Config
     {
         return $this->version;
     }
-
-   
 }
