@@ -25,7 +25,7 @@ class PayIn extends ApiClient
      * @param string|null $city
      * @param string|null $state
      * @param string|null $zip_code
-     * @return string
+     * @return array
      * @throws \Exception
      */
     public function create(
@@ -47,7 +47,7 @@ class PayIn extends ApiClient
         ?string $city = null,
         ?string $state = null,
         ?string $zip_code = null
-    ): string {
+    ): array {
         $url = $this->config->getApiUrl() ."/".$this->config->getVersion(). "/payins";
         $data = [
             'fullname'       => $fullname,
@@ -80,10 +80,10 @@ class PayIn extends ApiClient
      * 
      * @param string $paymentId
      * @param float  $amount
-     * @return string
+     * @return array
      * @throws \Exception
      */
-    public function refund(string $paymentId): string
+    public function refund(string $paymentId): array
     {
         $url = $this->config->getApiUrl() ."/".$this->config->getVersion(). "/payins/{$paymentId}/refund";
         // $data = ['amount' => $amount];
@@ -95,12 +95,17 @@ class PayIn extends ApiClient
      * Retrieve the status of a payment.
      * 
      * @param string $paymentId
-     * @return string
+     * @return array
      * @throws \Exception
      */
-    public function status(string $paymentId): string
+    public function status(string $paymentId): array
     {
         $url = $this->config->getApiUrl() ."/".$this->config->getVersion(). "/payins/{$paymentId}";
+        return $this->sendRequest($url, [], 'GET');
+    }
+    public function external_status(string $paymentId): array
+    {
+        $url = $this->config->getApiUrl() ."/".$this->config->getVersion(). "/payins-status/{$paymentId}";
         return $this->sendRequest($url, [], 'GET');
     }
 }

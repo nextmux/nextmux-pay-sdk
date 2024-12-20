@@ -17,10 +17,10 @@ abstract class ApiClient
      * @param string $url
      * @param array  $data
      * @param string $method
-     * @return string
+     * @return array
      * @throws \Exception
      */
-    protected function sendRequest(string $url, array $data = [], string $method = 'POST'): string
+    protected function sendRequest(string $url, array $data = [], string $method = 'POST'): array
     {
         $ch = curl_init($url);
         $access_token = $this->getToken();
@@ -51,8 +51,12 @@ abstract class ApiClient
         }
 
         curl_close($ch);
-
-        return $response;
+        $response_json = json_decode($response, true);
+        if (json_last_error() !== JSON_ERROR_NONE) {
+            throw new \Exception('JSON Decode Error: ' . json_last_error_msg());
+        }
+    
+        return $response_json ?: [];
     }
 
 

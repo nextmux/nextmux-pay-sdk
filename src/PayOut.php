@@ -10,10 +10,10 @@ class PayOut extends ApiClient
      * @param float  $amount
      * @param string $currency
      * @param array  $recipientDetails
-     * @return string
+     * @return array
      * @throws \Exception
      */
-    public function create(float $amount, string $currency, array $recipientDetails): string
+    public function create(float $amount, string $currency, array $recipientDetails): array
     {
         $url = $this->config->getApiUrl() ."/".$this->config->getVersion(). "/payouts";
         $data = array_merge($recipientDetails, ['amount' => $amount, 'currency' => $currency]);
@@ -24,12 +24,18 @@ class PayOut extends ApiClient
      * Get the status of a payout.
      * 
      * @param string $payoutId
-     * @return string
+     * @return array
      * @throws \Exception
      */
-    public function status(string $payoutId): string
+    public function status(string $payoutId): array
     {
         $url = $this->config->getApiUrl() ."/".$this->config->getVersion(). "/payouts/{$payoutId}";
+        return $this->sendRequest($url, [], 'GET');
+    }
+
+    public function external_status(string $payoutId): array
+    {
+        $url = $this->config->getApiUrl() ."/".$this->config->getVersion(). "/payouts-status/{$payoutId}";
         return $this->sendRequest($url, [], 'GET');
     }
 }

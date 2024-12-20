@@ -7,10 +7,10 @@ class Subscription extends ApiClient
     /**
      * Fetch all subscriptions.
      * 
-     * @return string
+     * @return array
      * @throws \Exception
      */
-    public function getAllSubscriptions(): string
+    public function getAllSubscriptions(): array
     {
         $url = $this->config->getApiUrl() ."/".$this->config->getVersion(). "/subscriptions";
         return $this->sendRequest($url, [], 'GET');
@@ -20,10 +20,10 @@ class Subscription extends ApiClient
      * Create a new subscription.
      * 
      * @param array $subscriptionData
-     * @return string
+     * @return array
      * @throws \Exception
      */
-    public function create(array $subscriptionData): string
+    public function create(array $subscriptionData): array
     {
         $url = $this->config->getApiUrl() ."/".$this->config->getVersion(). "/subscriptions";
         return $this->sendRequest($url, $subscriptionData);
@@ -33,10 +33,10 @@ class Subscription extends ApiClient
      * Get details of a specific subscription.
      * 
      * @param string $subscriptionId
-     * @return string
+     * @return array
      * @throws \Exception
      */
-    public function detail(string $subscriptionId): string
+    public function detail(string $subscriptionId): array
     {
         $url = $this->config->getApiUrl() ."/".$this->config->getVersion(). "/subscriptions/{$subscriptionId}";
         return $this->sendRequest($url, [], 'GET');
@@ -46,10 +46,10 @@ class Subscription extends ApiClient
      * Cancel a subscription.
      * 
      * @param string $subscriptionId
-     * @return string
+     * @return array
      * @throws \Exception
      */
-    public function cancel(string $subscriptionId): string
+    public function cancel(string $subscriptionId): array
     {
         $url = $this->config->getApiUrl() ."/".$this->config->getVersion(). "/subscriptions/{$subscriptionId}/cancel";
         return $this->sendRequest($url, [], 'POST');
@@ -59,10 +59,10 @@ class Subscription extends ApiClient
      * Create a subscription plan.
      * 
      * @param array $planData
-     * @return string
+     * @return array
      * @throws \Exception
      */
-    public function createPlan(array $planData): string
+    public function createPlan(array $planData): array
     {
         $url = $this->config->getApiUrl() ."/".$this->config->getVersion(). "/plans";
         return $this->sendRequest($url, $planData);
@@ -72,10 +72,10 @@ class Subscription extends ApiClient
      * Get details of a subscription plan.
      * 
      * @param string $planId
-     * @return string
+     * @return array
      * @throws \Exception
      */
-    public function planDetail(string $planId): string
+    public function planDetail(string $planId): array
     {
         $url = $this->config->getApiUrl() ."/".$this->config->getVersion(). "/plans/{$planId}";
         return $this->sendRequest($url, [], 'GET');
