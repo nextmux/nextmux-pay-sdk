@@ -8,7 +8,7 @@ abstract class ApiClient
 
     public function __construct()
     {
-        $this->config = Config::getInstance();
+        $this->config = NextmuxPay::init();
     }
 
     /**

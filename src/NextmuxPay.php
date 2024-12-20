@@ -2,7 +2,7 @@
 
 namespace Nextmux\PaySDK;
 
-class Config
+class NextmuxPay
 {
     private static $instance;
     private $publicKey;
@@ -17,13 +17,13 @@ class Config
         $this->apiUrl = $params['apiUrl'] ?? 'https://api.nextmuxpay.com';
         $this->version = $params['version'] ?? $this->version;
     }
-    public static function init(array $params = []): Config
+    public static function init(array $params = []): NextmuxPay
     {
         if (!self::$instance) {
-            self::$instance = new Config($params);
+            self::$instance = new NextmuxPay($params);
         } else {
             if (!empty($params)) {
-                throw new \Exception("Config instance is already initialized. Parameters cannot be redefined.");
+                throw new \Exception("NextmuxPay instance is already initialized. Parameters cannot be redefined.");
             }
         }
         return self::$instance;
