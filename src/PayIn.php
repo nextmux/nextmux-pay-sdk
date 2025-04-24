@@ -16,7 +16,7 @@ class PayIn extends ApiClient
      * @throws \Exception
      */
     public function with_mobile_money(
-     $operator_code,  array $params, $custom_params = [], $get_link = false
+      array $params, $custom_params = [], $get_link = false
     ): array {
 
         $required_params = [  'fullname',  'email',    'phone_number',   'amount',  'description'];
@@ -31,8 +31,10 @@ class PayIn extends ApiClient
         }
        $payment_data = $params;
        array_merge($payment_data, $custom_params);
-       $payment_data['operator_code'] = strtolower($operator_code);
-       $payment_data['payload'] =    json_encode($custom_params);
+       $payment_data['payment_method'] = 'mobile';
+       if(isset($payment_data['operator_code'])){
+        $payment_data['operator_code'] = strtolower($payment_data['operator_code']);
+       }
        $payment_data['currency'] = isset($payment_data['currency']) ? $payment_data['currency'] : 'XOF';
 
         $url = $this->config->getApiUrl() ."/".$this->config->getVersion(). "/payins";
