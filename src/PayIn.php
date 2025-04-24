@@ -16,8 +16,7 @@ class PayIn extends ApiClient
      * @throws \Exception
      */
     public function with_mobile_money(
-      array $params, $custom_params = [], $get_link = false
-    ): array {
+      array $params, $get_link = false): array {
 
         $required_params = [  'fullname',  'email',    'phone_number',   'amount',  'description'];
         // $optional_params = ['pay_type', 'fcm_token', 'pay_type_mode', 'operator_code', 'country_code', 'callback_url', 'notify_url', 'return_url', 'channels', 'lang', 'metadata', 'address', 'city', 'state', 'zip_code'];
@@ -30,7 +29,6 @@ class PayIn extends ApiClient
             }
         }
        $payment_data = $params;
-       array_merge($payment_data, $custom_params);
        $payment_data['payment_method'] = 'mobile';
        if(isset($payment_data['operator_code'])){
         $payment_data['operator_code'] = strtolower($payment_data['operator_code']);
