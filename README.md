@@ -1,5 +1,6 @@
 ```bash
-composer require nextmux/pay-sdk
+composer require nextmux/pay-sdk:dev-main --prefer-source
+
 ```
 
 ```php

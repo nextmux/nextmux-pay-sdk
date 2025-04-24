@@ -1,6 +1,6 @@
 <?php
 
-namespace Nextmux\PaySDK;
+namespace Nextmux\PaySdk;
 
 class PayIn extends ApiClient
 {
