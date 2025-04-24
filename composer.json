@@ -1,6 +1,5 @@
 {
     "name": "nextmux/pay-sdk",
-    "version": "1.0.129",
     "homepage": "https://github.com/nextmux/nextmux-pay-sdk",
     "keywords": ["nextmux", "payment", "payin", "payout"],
     "description": "A PHP SDK for handling payments, payins, and payouts",
@@ -14,7 +13,7 @@
     "authors": [
         {
             "name": "Nextmux SAS",
-            "email": "dev@nextmux.com"
+            "email": "info@nextmux.com"
         }
     ],
     "require": {

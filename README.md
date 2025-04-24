@@ -3,31 +3,68 @@ composer require nextmux/pay-sdk
 ```
 
 ```php
-use Nextmux\PaySDK\Pay;
-$pay = new Pay();
-echo $pay->createPayment(100, 'USD');
+use Nextmux\PaySDK\ApiClient;
+use Nextmux\PaySDK\NextmuxPay;
+use Nextmux\PaySDK\PayIn;
 
 
-use Nextmux\PaySDK\Config;
-use Nextmux\PaySDK\Pay;
+$nmpay = NextmuxPay::init(['publicKey' => 'PUBLIC_KEY', 'secretKey' => 'SECRET_KEY']);
+$token = $nmpay->getToken();
 
-// Configurer les clés API et l'URL de l'API une seule fois
+```
+
+
+```json
+// Traitement ok
+{
+    "token_type":"Bearer",
+    "expires_in":300,
+    "access_token":"eyJ0eXAiOiJKV1QiLC.....62D6bMrXURW4udsk"
+}
+
+```
+
+```json
+// traitement avec erreur
+null
+```
+
+
+```php 
+// Vous pouvez utiliser votre token pour des appel curl. Avec la class Http par exemple 
+
+ $response = Http::withHeaders([
+    'Authorization' => 'Bearer ' . $token['access_token'],
+    'Content-Type' => 'application/json',
+    'User-Agent' => 'LE_USER_AGENT' //request()->header('User-Agent'),
+    'X-Forwarded-For' =>'L_ADRESSE_IP' // request()->ip()
+])->post($nmpay->apiUrl . '/v1/payins', $payload);
+
+if ($response->successful()) {}
+
+```
+
+# Autre cas 
+```php
+// Configurer les clés API et l'URL de l'API une seule fois avec Config si vous souhaitez
 $config = Config::getInstance();
 $config->setKeys('PUBLIC_KEY', 'SECRET_KEY');
 $config->setApiUrl('https://api.nextmux.com');
 
 // Utilisation de la classe Pay
 $pay = new Pay();
-$response = $pay->initiatePayment(100.00, 'USD', ['order_id' => '123']);
+$response = $pay->with_mobile_money(
+    'mtn', // operator_code
+    [
+        'fullname' => 'John Doe',
+        'email' => 'john@example.com',
+        'phone_number' => '237699999999',
+        'amount' => 1000,
+        'description' => 'Payment for services'
+    ],
+    [], // custom_params (optional)
+    false // get_link (optional)
+);
 
-// Utilisation de la classe PayOut
-$payout = new PayOut();
-$response = $payout->createPayoutRequest(500.00, 'EUR', ['bank_account' => '987654']);
-
-// Get token
-curl -X POST https://api.nextmuxpay.com/oauth/token \
--H "Content-Type: application/x-www-form-urlencoded" \
--d "grant_type=password&client_id=your-client-id&client_secret=your-client-secret&scope="
-
-
+ 
 ```

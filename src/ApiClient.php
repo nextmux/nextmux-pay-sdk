@@ -60,7 +60,7 @@ abstract class ApiClient
     }
 
 
-    public function getToken(): string
+    public function getToken(): string | null
     {
         $ch = curl_init($this->config->getApiUrl() . '/oauth/token');
         $postData = http_build_query([
@@ -74,7 +74,7 @@ abstract class ApiClient
             'Content-Type: application/x-www-form-urlencoded',
             'Accept: application/json',
             'X-Forwarded-For: ' . ($_SERVER['REMOTE_ADDR'] ?? '127.0.0.1'),
-            'User-Agent: ' . ($_SERVER['HTTP_USER_AGENT'] ?? 'MyApp cURL'),
+            'User-Agent: ' . ($_SERVER['HTTP_USER_AGENT'] ?? 'App cURL'),
         ];
     
         curl_setopt_array($ch, [
